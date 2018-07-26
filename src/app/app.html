@@ -10,6 +10,15 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+      <button menuClose ion-item *ngIf="hasAuth; else noAuth" (click)="logout()">
+        Logout
+      </button>
+      <ng-template #noAuth>
+        <button menuClose ion-item *ngIf="!hasAuth" (click)="login()">
+          Login
+        </button>
+      </ng-template>
+
     </ion-list>
   </ion-content>
 

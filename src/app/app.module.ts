@@ -4,31 +4,59 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { LoginPage } from '../pages/login/login';
+import { HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+import { LoginServiceProvider } from '../providers/login-service/login-service';
+import { WeightEntriesProvider } from '../providers/weight-entries/weight-entries';
+import { SubmissionInfoPage } from '../pages/submission-info/submission-info';
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    LoginPage,
+    SubmissionInfoPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpClientModule,
+    IonicStorageModule.forRoot(),
+    JwtModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3001'], // TODO: update with server domain
+        blacklistedRoutes: ['localhost:3001/auth/'],
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    LoginPage,
+    SubmissionInfoPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    HttpClientModule,
+    IonicStorageModule,
+    JwtModule,
+    LoginServiceProvider,
+    JwtHelperService,
+    WeightEntriesProvider,
   ]
 })
-export class AppModule {}
+export class AppModule { }

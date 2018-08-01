@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment as ENV } from '../../../src/bin/environments/environment';
 
 /*
   Generated class for the LoginServiceProvider provider.
@@ -9,23 +10,40 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class LoginServiceProvider {
-  apiUrl = 'http://oev-fit-api.app/api';
+  apiUrl: String = ENV.BASE_URL;
 
   constructor(public http: HttpClient) {
 
   }
 
-  login(email, password) {
-    let body = {
-      email: email,
-      password: password
-    };
+  login(userId, pin) {
     let params = new HttpParams();
-    params = params.append('email', email);
-    params = params.append('password', password);
 
-    return this.http.post(this.apiUrl + '/authenticate', params).subscribe(data => {
-      localStorage.setItem('access_token', data['token']);
+    params = params.append('user', userId);
+    params = params.append('pin', pin);
+
+    return this.http.post(this.apiUrl + '/authenticate', params).map((res: Response) => {
+      return res;
+    });
+  }
+
+  logout() {
+    return this.http.get(this.apiUrl + '/logout?token=' + localStorage.getItem('access_token')).map((res: Response) => {
+      return res;
+    });
+  }
+
+  getGroups() {
+    return this.http.get(this.apiUrl + '/groups/index').map((res: Response) => {
+      return res;
+    });
+  }
+
+  getGroupUsers(groupId) {
+    let query = this.apiUrl + '/groups/users/' + groupId;
+
+    return this.http.get(query).map((res: Response) => {
+      return res;
     });
   }
 }

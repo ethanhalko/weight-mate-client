@@ -14,6 +14,10 @@ import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { LoginServiceProvider } from '../providers/login-service/login-service';
 import { WeightEntriesProvider } from '../providers/weight-entries/weight-entries';
 import { SubmissionInfoPage } from '../pages/submission-info/submission-info';
+import { SignupProvider } from '../providers/signup/signup';
+import { PersonalInfoPage } from '../pages/personal-info/personal-info';
+import { WeightInfoPage } from '../pages/weight-info/weight-info';
+import { PinCreationPage } from '../pages/pin-creation/pin-creation';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -24,7 +28,10 @@ export function tokenGetter() {
     MyApp,
     HomePage,
     LoginPage,
-    SubmissionInfoPage
+    SubmissionInfoPage,
+    PersonalInfoPage,
+    WeightInfoPage,
+    PinCreationPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +52,10 @@ export function tokenGetter() {
     MyApp,
     HomePage,
     LoginPage,
-    SubmissionInfoPage
+    SubmissionInfoPage,
+    PersonalInfoPage,
+    WeightInfoPage,
+    PinCreationPage
   ],
   providers: [
     StatusBar,
@@ -57,6 +67,7 @@ export function tokenGetter() {
     LoginServiceProvider,
     JwtHelperService,
     WeightEntriesProvider,
+    SignupProvider,
   ]
 })
 export class AppModule { }

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
 import { HomePage } from '../home/home';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { PersonalInfoPage } from '../personal-info/personal-info';
 /**
  * Generated class for the LoginPage page.
  *
@@ -18,30 +19,53 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class LoginPage {
 
-  http: HttpClient;
-  email: string;
-  password: string;
+  pin: number;
+  groups: Object;
+  users: Object;
+  selectedUser: Object;
+  invalidCredentials: Boolean;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
     public httpClient: HttpClient,
     private loginService: LoginServiceProvider,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private navCtrl: NavController
   ) {
-    this.http = httpClient;
-  }
+    this.getGroups();
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    if (localStorage.getItem('access_token')) {
+      navCtrl.setRoot(HomePage);
+    }
   }
 
   sendLoginRequest() {
-    this.loginService.login(this.email, this.password);
+    this.loginService.login(this.selectedUser, this.pin).subscribe(
+      res => {
+        localStorage.setItem('access_token', res['token']);
+        this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "forward" });
+      },
+      err => {
+        this.invalidCredentials = err.error['error'] == 'invalid_credentials';
+      });
+  }
 
-    let token = localStorage.getItem('access_token');
-    if (token) {
-      this.navCtrl.setRoot(HomePage);
-    }
+  setSelectedUser(user) {
+    this.selectedUser = user;
+  }
+
+  getGroups() {
+    this.loginService.getGroups().subscribe(res => {
+      this.groups = res;
+    });
+  }
+
+  getUsers(group) {
+    this.loginService.getGroupUsers(group).subscribe(res => {
+      this.users = res;
+    })
+  }
+
+  goToSignup() {
+    this.navCtrl.push(PersonalInfoPage);
   }
 }

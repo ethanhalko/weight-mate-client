@@ -8,9 +8,10 @@
 </ion-header>
 
 <ion-content padding>
-  <h4 text-center>Your Weight History</h4>
-  <div id="line"></div>
+  <h4 text-center>Welcome Back, {{name}}!</h4>
 
+  <h6 text-center>Your Weight History</h6>
+  <div id="bar"></div>
   <div *ngIf="showGraph; else noData">
 
   </div>
@@ -41,7 +42,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <!-- <ion-row>
         <ion-col col-12>
           <ion-item no-lines>
             <ion-segment [(ngModel)]="unit" color="primary" (ionChange)="unitChanged()">
@@ -54,7 +55,7 @@
             </ion-segment>
           </ion-item>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row>
         <ion-col col-12>
           <ion-item no-lines>
@@ -64,4 +65,7 @@
       </ion-row>
     </ion-grid>
   </ion-list>
+  <ion-footer text-center>
+    <button ion-button small (click)="logout()" color="danger" outline>Logout</button>
+  </ion-footer>
 </ion-content>

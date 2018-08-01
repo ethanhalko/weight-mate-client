@@ -1,0 +1,46 @@
+<!--
+  Generated template for the WeightInfoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Weigh In</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-row>
+    <ion-col col-8 offset-2>
+      <ion-item no-lines text-center>
+        <img src="../../assets/imgs/weight.png">
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-item>
+    <ion-label floating>Current Weight</ion-label>
+    <ion-input [(ngModel)]="currentWeight" type="number"></ion-input>
+  </ion-item>
+  <h6>What is your goal?</h6>
+  <ion-row>
+    <ion-col col-12>
+      <ion-item no-lines>
+        <ion-segment [(ngModel)]="goal" color="primary" (ionChange)="goalChanged()">
+          <ion-segment-button value="lose">
+            Gain Mass
+          </ion-segment-button>
+          <ion-segment-button value="gain">
+            Lose Weight
+          </ion-segment-button>
+        </ion-segment>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-item no-lines>
+    <button ion-button large block (click)="next()">Next</button>
+  </ion-item>
+</ion-content>

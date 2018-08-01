@@ -18,19 +18,30 @@ import { LoginPage } from '../login/login';
 export class SubmissionInfoPage {
 
   message: String;
+  timeout: Number;
+  loggedOut: Boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private login: LoginServiceProvider) {
     this.message = navParams.get('message');
-
+    this.timeout = 60000;
+    this.loggedOut = false;
     //log em out 
     setTimeout(() => {
-      this.logout();
-    }, 60000);
+      if (!this.loggedOut) {
+        this.logout();
+      }
+    }, this.timeout);
   }
 
   logout() {
     localStorage.removeItem('access_token');
-    //send logout request to server
-    this.navCtrl.setRoot(LoginPage);
+    this.loggedOut = true;
+    this.login.logout().subscribe(
+      res => {
+        this.navCtrl.setRoot(LoginPage, {}, { animate: true });
+      },
+      err => {
+        this.navCtrl.setRoot(LoginPage, {}, { animate: true });
+      });
   }
 }

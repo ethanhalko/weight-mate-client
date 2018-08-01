@@ -8,22 +8,35 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="login">
-  <img src="../../assets/imgs/logo_black.png">
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Email</ion-label>
-      <ion-input [(ngModel)]="email" type="text"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input [(ngModel)]="password" type="password"></ion-input>
-    </ion-item>
-
-    <ion-item no-lines>
-      <button ion-button large block (click)="sendLoginRequest()">Submit</button>
-    </ion-item>
-
-  </ion-list>
+<ion-content padding>
+  <ion-row>
+    <ion-col col-8 offset-2>
+      <ion-item no-lines text-center>
+        <img src="../../assets/imgs/logo_black.png">
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-item>
+    <ion-label>Group</ion-label>
+    <ion-select [(ngModel)]="group" (ionChange)="getUsers(group)">
+      <ion-option *ngFor="let group of groups" value="{{group.id}}">{{ group.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>User</ion-label>
+    <ion-select [(ngModel)]="user" (ionChange)="setSelectedUser(user)">
+      <ion-option *ngFor="let user of users" value="{{user.id}}">{{ user.first_name }} {{ user.last_name }}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>PIN</ion-label>
+    <ion-input [(ngModel)]="pin" type="number"></ion-input>
+  </ion-item>
+  <p text-center class="danger" *ngIf="invalidCredentials">Invalid Pin!</p>
+  <ion-item no-lines>
+    <button ion-button large block (click)="sendLoginRequest()">Submit</button>
+  </ion-item>
+  <ion-item no-lines>
+    <button ion-button large block color="light" (click)="goToSignup()">Signup</button>
+  </ion-item>
 </ion-content>

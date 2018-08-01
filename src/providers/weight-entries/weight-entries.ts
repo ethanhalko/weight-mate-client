@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import { environment as ENV } from '../../../src/bin/environments/environment';
+
 /*
   Generated class for the WeightEntriesProvider provider.
 
@@ -11,15 +13,14 @@ import 'rxjs/add/operator/map';
 export class WeightEntriesProvider {
 
   entries: Object;
+  apiUrl: String = ENV.BASE_URL;
 
   constructor(public http: HttpClient) {
   }
 
   getWeightEntries() {
     let params = new HttpParams();
-    let queryUrl = 'https://oev-fit-api.app/api/weight-entries/index?token=' + localStorage.getItem('access_token');
-
-    params = params.append('token', localStorage.getItem('acess_token'));
+    let queryUrl = this.apiUrl + '/weight-entries/index?token=' + localStorage.getItem('access_token');
 
     return this.http.get(queryUrl).map((res: Response) => {
       return res
@@ -40,7 +41,6 @@ export class WeightEntriesProvider {
 
   formatWeightData(data) {
     let formattedData = [];
-    console.log(data);
     for (var i = 0; i < data.length; ++i) {
       formattedData.push({
         type: 'weight', weight: data[i].weight, date: data[i].created_at

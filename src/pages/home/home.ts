@@ -9,6 +9,7 @@ import { WeightEntriesProvider } from '../../providers/weight-entries/weight-ent
 import { AlertController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { SubmissionInfoPage } from '../submission-info/submission-info';
+import { LoginServiceProvider } from '../../providers/login-service/login-service';
 
 @Component({
   selector: 'page-home',
@@ -24,12 +25,14 @@ export class HomePage {
   storageProvider: Storage;
   hasToken: boolean;
   showGraph: boolean;
+  name: String;
 
   constructor(
     public navCtrl: NavController,
     private jwt: JwtHelperService,
     private WeightEntriesService: WeightEntriesProvider,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loginService: LoginServiceProvider
   ) {
 
     this.unit = "lb";
@@ -45,23 +48,17 @@ export class HomePage {
     if (!this.hasToken) return;
     this.WeightEntriesService.getWeightEntries().subscribe(
       res => {
+        this.name = res['user']['first_name'] + ' ' + res['user']['last_name'];
         this.formattedData = this.WeightEntriesService.formatWeightData(res['entries']);
         if (this.formattedData.length > 0) {
           let chart = new Chart({
             data: this.formattedData,
-            type: 'line',
+            type: 'bar',
             x: 'date',
-            y: 'weight',
-            color: 'date',
-            guide: {
-              interpolate: 'smooth-keep-extremum',
-              color: {
-                brewer: { date: '#000000' }
-              }
-            },
+            y: 'weight'
           });
           this.showGraph = true;
-          chart.renderTo(document.getElementById('line'));
+          chart.renderTo(document.getElementById('bar'));
         }
       },
       err => console.log(err)
@@ -75,7 +72,7 @@ export class HomePage {
         let message = res['message'];
         this.formattedData = this.formattedData.concat(this.WeightEntriesService.formatWeightData([res]));
 
-        this.navCtrl.setRoot(SubmissionInfoPage, { message: message });
+        this.navCtrl.setRoot(SubmissionInfoPage, { message: message }, { animate: true, direction: "forward" });
       },
       err => console.log(err)
     );
@@ -92,11 +89,22 @@ export class HomePage {
   unitChanged() {
     if (typeof this.weight == 'undefined') return;
 
-    console.log(typeof this.weight);
     if (this.unit === "kg") {
       this.weight = this.fix(this.weight * 0.453592);
     } else if (this.unit === "lb") {
       this.weight = this.fix(this.weight * 2.20462);
     }
+  }
+
+  logout() {
+    this.loginService.logout().subscribe(
+      res => {
+        localStorage.removeItem('access_token');
+        this.navCtrl.setRoot(LoginPage, {}, { animate: true });
+      },
+      err => {
+        localStorage.removeItem('access_token');
+        this.navCtrl.setRoot(LoginPage, {}, { animate: true });
+      });
   }
 }

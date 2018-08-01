@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { WeightInfoPage } from '../weight-info/weight-info';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
 
@@ -10,7 +10,6 @@ import { LoginServiceProvider } from '../../providers/login-service/login-servic
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-personal-info',
   templateUrl: 'personal-info.html',

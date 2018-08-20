@@ -32,7 +32,7 @@ export class WeightEntriesProvider {
     params = params.append('weight', weight);
     params = params.append('token', localStorage.getItem('access_token'));
 
-    let queryUrl = 'https://oev-fit-api.app/api/weight-entries/';
+    let queryUrl = this.apiUrl + '/weight-entries';
 
     return this.http.post(queryUrl, params).map((res: Response) => {
       return res;

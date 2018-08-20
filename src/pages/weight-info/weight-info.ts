@@ -17,7 +17,7 @@ export class WeightInfoPage {
 
   userInfo: Object;
   currentWeight: Number;
-  goal: String;
+  goal: String = 'lose';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.userInfo = navParams.get('userInfo');

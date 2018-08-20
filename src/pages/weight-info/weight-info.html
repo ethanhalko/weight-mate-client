@@ -17,7 +17,7 @@
   <ion-row>
     <ion-col col-8 offset-2>
       <ion-item no-lines text-center>
-        <img src="../../assets/imgs/weight.png">
+        <img src="assets/imgs/weight.png">
       </ion-item>
     </ion-col>
   </ion-row>
@@ -25,16 +25,16 @@
     <ion-label floating>Current Weight</ion-label>
     <ion-input [(ngModel)]="currentWeight" type="number"></ion-input>
   </ion-item>
-  <h6>What is your goal?</h6>
+  <h6 text-center class="goal">What is your goal?</h6>
   <ion-row>
     <ion-col col-12>
       <ion-item no-lines>
-        <ion-segment [(ngModel)]="goal" color="primary" (ionChange)="goalChanged()">
+        <ion-segment [(ngModel)]="goal" color="primary">
           <ion-segment-button value="lose">
-            Gain Mass
+            Lose Weight
           </ion-segment-button>
           <ion-segment-button value="gain">
-            Lose Weight
+            Gain Mass
           </ion-segment-button>
         </ion-segment>
       </ion-item>

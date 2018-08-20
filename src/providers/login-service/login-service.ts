@@ -16,11 +16,11 @@ export class LoginServiceProvider {
 
   }
 
-  login(userId, pin) {
+  login(email, password) {
     let params = new HttpParams();
 
-    params = params.append('user', userId);
-    params = params.append('pin', pin);
+    params = params.append('email', email);
+    params = params.append('password', password);
 
     return this.http.post(this.apiUrl + '/authenticate', params).map((res: Response) => {
       return res;
@@ -28,7 +28,9 @@ export class LoginServiceProvider {
   }
 
   logout() {
-    return this.http.get(this.apiUrl + '/logout?token=' + localStorage.getItem('access_token')).map((res: Response) => {
+    let queryUrl = this.apiUrl + '/logout?token=' + localStorage.getItem('access_token');
+
+    return this.http.get(queryUrl).map((res: Response) => {
       return res;
     });
   }
@@ -39,8 +41,8 @@ export class LoginServiceProvider {
     });
   }
 
-  getGroupUsers(groupId) {
-    let query = this.apiUrl + '/groups/users/' + groupId;
+  getUsers() {
+    let query = this.apiUrl + '/users/';
 
     return this.http.get(query).map((res: Response) => {
       return res;

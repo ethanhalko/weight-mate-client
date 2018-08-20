@@ -18,6 +18,7 @@ import { SignupProvider } from '../providers/signup/signup';
 import { PersonalInfoPage } from '../pages/personal-info/personal-info';
 import { WeightInfoPage } from '../pages/weight-info/weight-info';
 import { PinCreationPage } from '../pages/pin-creation/pin-creation';
+import { UserSelectPage } from '../pages/user-select/user-select';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -31,7 +32,8 @@ export function tokenGetter() {
     SubmissionInfoPage,
     PersonalInfoPage,
     WeightInfoPage,
-    PinCreationPage
+    PinCreationPage,
+    UserSelectPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ export function tokenGetter() {
     SubmissionInfoPage,
     PersonalInfoPage,
     WeightInfoPage,
-    PinCreationPage
+    PinCreationPage,
+    UserSelectPage
   ],
   providers: [
     StatusBar,

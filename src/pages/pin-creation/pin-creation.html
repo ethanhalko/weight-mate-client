@@ -15,7 +15,7 @@
   <ion-row>
     <ion-col col-8 offset-2>
       <ion-item no-lines text-center>
-        <img src="../../assets/imgs/pin.png">
+        <img src="assets/imgs/pin.png">
       </ion-item>
     </ion-col>
   </ion-row>
@@ -25,11 +25,11 @@
   <p text-center>Must be 6 digits, numbers only.</p>
   <ion-item>
     <ion-label floating>PIN</ion-label>
-    <ion-input [(ngModel)]="pin" type="number" (ionBlur)="comparePINs()"></ion-input>
+    <ion-input [(ngModel)]="pin" type="number" pattern="\\d*" (ionBlur)="comparePINs()"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>PIN (confirm)</ion-label>
-    <ion-input [(ngModel)]="pinConfirmation" type="number" (ionBlur)="comparePINs()"></ion-input>
+    <ion-input [(ngModel)]="pinConfirmation" type="number" pattern="\\d*" (ionBlur)="comparePINs()"></ion-input>
   </ion-item>
   <p text-center *ngFor="let error of pinValidationMessages" class="danger">{{error}}</p>
   <ion-item no-lines>

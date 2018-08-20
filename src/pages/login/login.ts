@@ -5,6 +5,7 @@ import { LoginServiceProvider } from '../../providers/login-service/login-servic
 import { HomePage } from '../home/home';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { PersonalInfoPage } from '../personal-info/personal-info';
+import { UserSelectPage } from '../user-select/user-select';
 /**
  * Generated class for the LoginPage page.
  *
@@ -18,11 +19,13 @@ import { PersonalInfoPage } from '../personal-info/personal-info';
 })
 export class LoginPage {
 
-  pin: number;
+  email: string;
+  password: number;
   groups: Object;
   users: Object;
   selectedUser: Object;
   invalidCredentials: Boolean;
+  hasToken: Boolean;
 
   constructor(
     public httpClient: HttpClient,
@@ -30,18 +33,22 @@ export class LoginPage {
     private jwtHelper: JwtHelperService,
     private navCtrl: NavController
   ) {
-    this.getGroups();
-
     if (localStorage.getItem('access_token')) {
       navCtrl.setRoot(HomePage);
     }
   }
 
+  ionViewWillEnter() {
+    if (localStorage.getItem('access_token')) {
+      this.navCtrl.setRoot(UserSelectPage);
+    }
+  }
+
   sendLoginRequest() {
-    this.loginService.login(this.selectedUser, this.pin).subscribe(
+    this.loginService.login(this.email, this.password).subscribe(
       res => {
         localStorage.setItem('access_token', res['token']);
-        this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: "forward" });
+        this.navCtrl.setRoot(UserSelectPage, {}, { animate: true, direction: "forward" });
       },
       err => {
         this.invalidCredentials = err.error['error'] == 'invalid_credentials';
@@ -50,18 +57,6 @@ export class LoginPage {
 
   setSelectedUser(user) {
     this.selectedUser = user;
-  }
-
-  getGroups() {
-    this.loginService.getGroups().subscribe(res => {
-      this.groups = res;
-    });
-  }
-
-  getUsers(group) {
-    this.loginService.getGroupUsers(group).subscribe(res => {
-      this.users = res;
-    })
   }
 
   goToSignup() {

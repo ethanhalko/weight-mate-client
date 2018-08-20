@@ -33,13 +33,14 @@ export class SubmissionInfoPage {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
     this.loggedOut = true;
     this.login.logout().subscribe(
       res => {
+        localStorage.removeItem('access_token');
         this.navCtrl.setRoot(LoginPage, {}, { animate: true });
       },
       err => {
+        localStorage.removeItem('access_token');
         this.navCtrl.setRoot(LoginPage, {}, { animate: true });
       });
   }

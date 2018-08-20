@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Alert } from 'ionic-angular';
+import { NavController, Alert, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { Chart } from 'taucharts';
@@ -10,6 +10,7 @@ import { AlertController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { SubmissionInfoPage } from '../submission-info/submission-info';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
+import { UserSelectPage } from '../user-select/user-select';
 
 @Component({
   selector: 'page-home',
@@ -25,10 +26,11 @@ export class HomePage {
   storageProvider: Storage;
   hasToken: boolean;
   showGraph: boolean;
-  name: String;
+  user: String;
 
   constructor(
     public navCtrl: NavController,
+    private navParams: NavParams,
     private jwt: JwtHelperService,
     private WeightEntriesService: WeightEntriesProvider,
     private alertCtrl: AlertController,
@@ -42,28 +44,28 @@ export class HomePage {
     let token = localStorage.getItem('access_token');
     this.hasToken = token && !jwt.isTokenExpired(token);
     this.showGraph = false;
+    this.user = navParams.get('user');
   }
 
-  ionViewWillEnter() {
-    if (!this.hasToken) return;
-    this.WeightEntriesService.getWeightEntries().subscribe(
-      res => {
-        this.name = res['user']['first_name'] + ' ' + res['user']['last_name'];
-        this.formattedData = this.WeightEntriesService.formatWeightData(res['entries']);
-        if (this.formattedData.length > 0) {
-          let chart = new Chart({
-            data: this.formattedData,
-            type: 'bar',
-            x: 'date',
-            y: 'weight'
-          });
-          this.showGraph = true;
-          chart.renderTo(document.getElementById('bar'));
-        }
-      },
-      err => console.log(err)
-    );
-  }
+  // ionViewWillEnter() {
+  //   if (!this.hasToken) return;
+  //   this.WeightEntriesService.getWeightEntries().subscribe(
+  //     res => {
+  //       this.formattedData = this.WeightEntriesService.formatWeightData(res['entries']);
+  //       if (this.formattedData.length > 0) {
+  //         let chart = new Chart({
+  //           data: this.formattedData,
+  //           type: 'bar',
+  //           x: 'date',
+  //           y: 'weight'
+  //         });
+  //         this.showGraph = true;
+  //         chart.renderTo(document.getElementById('bar'));
+  //       }
+  //     },
+  //     err => console.log(err)
+  //   );
+  // }
 
   submitWeightData() {
     this.WeightEntriesService.submitWeightEntry(this.weight).subscribe(
@@ -97,14 +99,6 @@ export class HomePage {
   }
 
   logout() {
-    this.loginService.logout().subscribe(
-      res => {
-        localStorage.removeItem('access_token');
-        this.navCtrl.setRoot(LoginPage, {}, { animate: true });
-      },
-      err => {
-        localStorage.removeItem('access_token');
-        this.navCtrl.setRoot(LoginPage, {}, { animate: true });
-      });
+    this.navCtrl.setRoot(UserSelectPage);
   }
 }

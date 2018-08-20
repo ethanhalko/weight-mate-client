@@ -8,30 +8,13 @@
 </ion-header>
 
 <ion-content padding>
-  <h4 text-center>Welcome Back, {{name}}!</h4>
 
-  <h6 text-center>Your Weight History</h6>
-  <div id="bar"></div>
-  <div *ngIf="showGraph; else noData">
-
+  <div *ngIf="user">
+    <h1>Welcome Back</h1>
+    <h1>{{user.first_name}} {{user.last_name}}!</h1>
   </div>
-  <ng-template #noData>
-    <div *ngIf="hasToken; else noToken">
-      <p class="graph-standin" text-center>
-        <em>It looks like you haven't entered any weight data yet!</em>
-        <br>
-        <em>Once you start tracking your weigh-ins, your progress will be charted here. </em>
-      </p>
-    </div>
-    <ng-template #noToken>
-      <p class="graph-standin" text-center>
-        You aren't logged in!
-        <br> To see this graph and to enter your weight, log in:
-      </p>
-      <button ion-button block (click)="goToLogin()">Log In</button>
-    </ng-template>
-  </ng-template>
-  <h4 text-center>Enter Your Current Weight</h4>
+
+  <h2>Enter Your Current Weight</h2>
   <ion-list>
     <ion-grid>
       <ion-row>
@@ -42,20 +25,6 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <!-- <ion-row>
-        <ion-col col-12>
-          <ion-item no-lines>
-            <ion-segment [(ngModel)]="unit" color="primary" (ionChange)="unitChanged()">
-              <ion-segment-button value="lb">
-                Lbs
-              </ion-segment-button>
-              <ion-segment-button value="kg">
-                Kgs
-              </ion-segment-button>
-            </ion-segment>
-          </ion-item>
-        </ion-col>
-      </ion-row> -->
       <ion-row>
         <ion-col col-12>
           <ion-item no-lines>
@@ -63,9 +32,13 @@
           </ion-item>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item no-lines>
+            <button ion-button large block (click)="logout()" color="danger" outline>Cancel</button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-list>
-  <ion-footer text-center>
-    <button ion-button small (click)="logout()" color="danger" outline>Logout</button>
-  </ion-footer>
 </ion-content>

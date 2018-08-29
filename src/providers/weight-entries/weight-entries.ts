@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { environment as ENV } from '../../../src/bin/environments/environment';
@@ -27,14 +27,20 @@ export class WeightEntriesProvider {
     });
   }
 
-  submitWeightEntry(weight) {
+  submitWeightEntry(weight, userId) {
     let params = new HttpParams();
+    let headers = new HttpHeaders();
     params = params.append('weight', weight);
-    params = params.append('token', localStorage.getItem('access_token'));
+    params = params.append('user', userId);
+    headers = headers.append('authorization', localStorage.getItem('access_token'))
 
     let queryUrl = this.apiUrl + '/weight-entries';
 
-    return this.http.post(queryUrl, params).map((res: Response) => {
+    return this.http.post(
+      queryUrl,
+      params,
+      { headers }
+    ).map((res: Response) => {
       return res;
     });
   }

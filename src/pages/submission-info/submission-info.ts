@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
 import { LoginPage } from '../login/login';
+import { UserSelectPage } from '../user-select/user-select';
 
 /**
  * Generated class for the SubmissionInfoPage page.
@@ -34,14 +35,6 @@ export class SubmissionInfoPage {
 
   logout() {
     this.loggedOut = true;
-    this.login.logout().subscribe(
-      res => {
-        localStorage.removeItem('access_token');
-        this.navCtrl.setRoot(LoginPage, {}, { animate: true });
-      },
-      err => {
-        localStorage.removeItem('access_token');
-        this.navCtrl.setRoot(LoginPage, {}, { animate: true });
-      });
+    this.navCtrl.setRoot(UserSelectPage);
   }
 }

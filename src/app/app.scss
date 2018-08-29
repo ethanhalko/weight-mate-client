@@ -14,5 +14,27 @@
 // automatically applied to the <body> element in the app.
 @font-face {
   font-family: 'BebasNeueRegular';
-  src: url('www/assets/fonts/BebasNeueRegular.ttf') format('truetype');
+  src: url('../assets/fonts/BebasNeueRegular.ttf') format('truetype');
+}
+
+body {
+  font-family: 'BebasNeueRegular' !important;
+}
+
+.item-label-floating {
+  font-size: 50px;
+}
+
+.button-large {
+  padding: 40px !important;
+
+  .button-inner {
+    font-size: 50px !important;
+  }
+}
+
+.underline {
+  margin-bottom: 30px;
+  display: inline-block;
+  border-bottom: solid 4px black;
 }

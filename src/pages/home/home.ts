@@ -26,7 +26,7 @@ export class HomePage {
   storageProvider: Storage;
   hasToken: boolean;
   showGraph: boolean;
-  user: String;
+  user: Object;
 
   constructor(
     public navCtrl: NavController,
@@ -67,8 +67,8 @@ export class HomePage {
   //   );
   // }
 
-  submitWeightData() {
-    this.WeightEntriesService.submitWeightEntry(this.weight).subscribe(
+  submitWeightData(user) {
+    this.WeightEntriesService.submitWeightEntry(this.weight, user).subscribe(
       res => {
         let weightData = res['weight'];
         let message = res['message'];

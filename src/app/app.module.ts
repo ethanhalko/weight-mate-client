@@ -19,7 +19,8 @@ import { PersonalInfoPage } from '../pages/personal-info/personal-info';
 import { WeightInfoPage } from '../pages/weight-info/weight-info';
 import { PinCreationPage } from '../pages/pin-creation/pin-creation';
 import { UserSelectPage } from '../pages/user-select/user-select';
-
+import { UserSearchProvider } from '../providers/user-search/user-search';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -71,6 +72,8 @@ export function tokenGetter() {
     JwtHelperService,
     WeightEntriesProvider,
     SignupProvider,
+    UserSearchProvider,
+    BarcodeScanner
   ]
 })
 export class AppModule { }

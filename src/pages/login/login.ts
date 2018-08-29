@@ -6,6 +6,8 @@ import { HomePage } from '../home/home';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { PersonalInfoPage } from '../personal-info/personal-info';
 import { UserSelectPage } from '../user-select/user-select';
+import { environment as ENV } from '../../../src/bin/environments/environment';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -26,6 +28,8 @@ export class LoginPage {
   selectedUser: Object;
   invalidCredentials: Boolean;
   hasToken: Boolean;
+  env = ENV.BASE_URL;
+  error: string;
 
   constructor(
     public httpClient: HttpClient,
@@ -51,6 +55,8 @@ export class LoginPage {
         this.navCtrl.setRoot(UserSelectPage, {}, { animate: true, direction: "forward" });
       },
       err => {
+        console.log(err.error);
+        this.error = err;
         this.invalidCredentials = err.error['error'] == 'invalid_credentials';
       });
   }

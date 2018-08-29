@@ -45,4 +45,18 @@ $colors: ( primary: #000000, secondary: #32db64, danger: #f53d3d, light: #f4f4f4
 @import "ionic.ionicons";
 // Fonts
 // --------------------------------------------------
-@import "noto-sans";
+// @import "roboto";
+// @import "noto-sans";
+$font-family-ios-base: "BebasNeueRegular",
+-apple-system,
+"Helvetica Neue",
+"Roboto",
+sans-serif;
+$font-family-md-base: "BebasNeueRegular",
+"Roboto",
+"Helvetica Neue",
+sans-serif;
+$font-family-wp-base: "BebasNeueRegular",
+"Segoe UI",
+"Noto Sans",
+sans-serif;

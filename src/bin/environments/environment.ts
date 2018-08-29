@@ -1,3 +1,3 @@
-export var environment = {   //THIS IS FOR DEV VALUES
-    BASE_URL: 'http://weight-mate-api.app/api',
+export var environment = {   //THIS IS FOR PROD VALUES
+    BASE_URL: 'https://weightmate.ca/api',
 }

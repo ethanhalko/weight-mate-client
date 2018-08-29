@@ -24,8 +24,12 @@
     <ion-label floating>Password</ion-label>
     <ion-input [(ngModel)]="password" type="password"></ion-input>
   </ion-item>
+  <ion-item>
+    {{error}}
+  </ion-item>
   <p text-center class="danger " *ngIf="invalidCredentials ">Invalid Password!</p>
   <ion-item no-lines class="submit ">
     <button ion-button large block (click)="sendLoginRequest() ">Submit</button>
   </ion-item>
+  <h2>{{env}}</h2>
 </ion-content>

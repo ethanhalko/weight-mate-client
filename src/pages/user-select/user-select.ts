@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
-import { HomePage } from '../home/home';
 import { UserSearchProvider } from '../../providers/user-search/user-search';
 import { BarcodeScanner } from '../../../node_modules/@ionic-native/barcode-scanner';
+import * as _ from 'lodash';
 
 /**
  * Generated class for the UserSelectPage page.
@@ -11,7 +11,7 @@ import { BarcodeScanner } from '../../../node_modules/@ionic-native/barcode-scan
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+@IonicPage()
 @Component({
   selector: 'page-user-select',
   templateUrl: 'user-select.html',
@@ -35,13 +35,21 @@ export class UserSelectPage {
   }
 
   selectUser(user) {
-    this.navCtrl.push(HomePage, { 'user': user });
+    this.navCtrl.push('HomePage', { 'user': user });
   }
 
   search(name) {
     this.userSearch.userSearch(name).subscribe(res => {
       this.users = res;
     });
+  }
+
+  doRefresh(refresher) {
+    this.getUsers();
+
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
   scan() {
@@ -51,20 +59,15 @@ export class UserSelectPage {
         showFlipCameraButton: false
       }
     ).then(barcodeData => {
-      this.userSearch.scan(barcodeData).subscribe(res => {
+      if (!_.isNil(barcodeData['text'])) {
+        this.selectUser(_.find(this.users, { 'barcode': barcodeData['text'] }));
+      } else {
         this.alertCtrl.create({
-          title: 'Error!',
-          subTitle: res['user'],
+          title: 'User not found',
+          subTitle: 'There was no user found associated with the barcode. Try searching the users name instead.',
           buttons: ['OK']
         }).present();
-        this.selectUser(res['user']);
-      });
-    }).catch(err => {
-      this.alertCtrl.create({
-        title: 'Error!',
-        subTitle: err,
-        buttons: ['OK']
-      }).present();
+      }
     });
   }
 }

@@ -5,25 +5,29 @@
   Ionic pages and navigation.
 -->
 <ion-content padding>
+  <ion-fab right bottom>
+    <button large ion-fab (click)="scan()">
+      <ion-icon name="ios-barcode-outline" class="white"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
   <h1>Your Name:</h1>
   <ion-list>
     <ion-grid>
-      <ion-row>
-        <ion-col col-1>
-          <button ion-button (click)="scan()">
-            <ion-icon name="barcode"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col col-11>
+      <ion-row align-items-center>
+        <ion-col col-12>
           <ion-item no-lines>
             <ion-input placeholder="Search" [(ngModel)]='name' (input)="search(name)"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-item *ngFor="let user of users" (click)="selectUser(user)">
+      <ion-item *ngFor="let user of users" tappable (click)="selectUser(user)">
         <h2>{{user.first_name}} {{user.last_name}}</h2>
       </ion-item>
     </ion-grid>
-
   </ion-list>
+
 </ion-content>

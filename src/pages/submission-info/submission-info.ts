@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
-import { LoginPage } from '../login/login';
-import { UserSelectPage } from '../user-select/user-select';
 
 /**
  * Generated class for the SubmissionInfoPage page.
@@ -10,7 +8,7 @@ import { UserSelectPage } from '../user-select/user-select';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+@IonicPage()
 @Component({
   selector: 'page-submission-info',
   templateUrl: 'submission-info.html',
@@ -35,6 +33,6 @@ export class SubmissionInfoPage {
 
   logout() {
     this.loggedOut = true;
-    this.navCtrl.setRoot(UserSelectPage);
+    this.navCtrl.setRoot('UserSelectPage');
   }
 }

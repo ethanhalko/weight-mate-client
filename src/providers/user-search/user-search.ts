@@ -25,7 +25,7 @@ export class UserSearchProvider {
   }
 
   scan(barcode) {
-    let queryUrl = this.apiUrl + '/users/scan?q='
+    let queryUrl = this.apiUrl + '/users/scan?barcode='
       + barcode
       + '&token=' + localStorage.getItem('access_token');
 

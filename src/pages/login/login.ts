@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
-import { HomePage } from '../home/home';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { PersonalInfoPage } from '../personal-info/personal-info';
-import { UserSelectPage } from '../user-select/user-select';
 import { environment as ENV } from '../../../src/bin/environments/environment';
 
 /**
@@ -14,7 +11,7 @@ import { environment as ENV } from '../../../src/bin/environments/environment';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -38,13 +35,13 @@ export class LoginPage {
     private navCtrl: NavController
   ) {
     if (localStorage.getItem('access_token')) {
-      navCtrl.setRoot(HomePage);
+      navCtrl.setRoot('HomePage');
     }
   }
 
   ionViewWillEnter() {
     if (localStorage.getItem('access_token')) {
-      this.navCtrl.setRoot(UserSelectPage);
+      this.navCtrl.setRoot('UserSelectPage');
     }
   }
 
@@ -52,20 +49,16 @@ export class LoginPage {
     this.loginService.login(this.email, this.password).subscribe(
       res => {
         localStorage.setItem('access_token', res['token']);
-        this.navCtrl.setRoot(UserSelectPage, {}, { animate: true, direction: "forward" });
+        this.navCtrl.setRoot('UserSelectPage', {}, { animate: true, direction: "forward" });
       },
       err => {
-        console.log(err.error);
-        this.error = err;
+        console.log(err['message']);
+        this.error = err['message'];
         this.invalidCredentials = err.error['error'] == 'invalid_credentials';
       });
   }
 
   setSelectedUser(user) {
     this.selectedUser = user;
-  }
-
-  goToSignup() {
-    this.navCtrl.push(PersonalInfoPage);
   }
 }

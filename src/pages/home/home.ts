@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, Alert, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, Alert, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
 import { Chart } from 'taucharts';
-import { LoginPage } from '../login/login';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { WeightEntriesProvider } from '../../providers/weight-entries/weight-entries';
 import { AlertController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
-import { SubmissionInfoPage } from '../submission-info/submission-info';
 import { LoginServiceProvider } from '../../providers/login-service/login-service';
-import { UserSelectPage } from '../user-select/user-select';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -74,14 +71,14 @@ export class HomePage {
         let message = res['message'];
         this.formattedData = this.formattedData.concat(this.WeightEntriesService.formatWeightData([res]));
 
-        this.navCtrl.setRoot(SubmissionInfoPage, { message: message }, { animate: true, direction: "forward" });
+        this.navCtrl.setRoot('SubmissionInfoPage', { message: message }, { animate: true, direction: "forward" });
       },
       err => console.log(err)
     );
   }
 
   goToLogin() {
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.push('LoginPage');
   }
 
   fix(x) {
@@ -99,6 +96,6 @@ export class HomePage {
   }
 
   logout() {
-    this.navCtrl.setRoot(UserSelectPage);
+    this.navCtrl.setRoot('UserSelectPage');
   }
 }

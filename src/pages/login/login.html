@@ -17,19 +17,16 @@
     </ion-col>
   </ion-row>
   <ion-item>
-    <ion-label floating>Email</ion-label>
-    <ion-input [(ngModel)]="email"></ion-input>
+    <ion-input placeholder="Email" [(ngModel)]='email' type="email"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input [(ngModel)]="password" type="password"></ion-input>
+    <ion-input placeholder="Password" [(ngModel)]='password' type="password"></ion-input>
   </ion-item>
-  <ion-item>
-    {{error}}
+  <ion-item *ngIf="error && !invalidCredentials">
   </ion-item>
+  <p text-center class="danger">{{ error }}</p>
   <p text-center class="danger " *ngIf="invalidCredentials ">Invalid Password!</p>
   <ion-item no-lines class="submit ">
     <button ion-button large block (click)="sendLoginRequest() ">Submit</button>
   </ion-item>
-  <h2>{{env}}</h2>
 </ion-content>

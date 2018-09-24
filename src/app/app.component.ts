@@ -2,9 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
@@ -13,7 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LoginPage;
+  rootPage: any = 'LoginPage';
 
   pages: Array<{ title: string, component: any }>;
 
@@ -26,7 +23,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
+      { title: 'Home', component: 'HomePage' },
     ];
   }
 
@@ -47,7 +44,7 @@ export class MyApp {
 
   login() {
     if (!this.hasAuth) {
-      this.nav.setRoot(LoginPage);
+      this.nav.setRoot('LoginPage');
     }
   }
 
@@ -55,7 +52,7 @@ export class MyApp {
     if (this.hasAuth) {
       localStorage.removeItem('access_token');
       //send logout request to server
-      this.nav.setRoot(LoginPage);
+      this.nav.setRoot('LoginPage');
     }
   }
 }

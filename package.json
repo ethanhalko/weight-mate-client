@@ -52,7 +52,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "3.1.10",
     "@types/lodash": "4.14.116",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
